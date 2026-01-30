@@ -28,3 +28,6 @@ The model was trained on a subset of the **PlantVillage** dataset, covering 15 c
 ## 📈 Future Work
 - Deploy the model using **Streamlit** for a web-based demo.
 - Quantize the model for mobile deployment to assist farmers in low-connectivity areas.
+
+## ⚠️ Security Note
+The `kaggle.json` API key used for data ingestion is **not** included in this repository for security reasons. To reproduce, please use your own Kaggle API credentials.

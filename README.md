@@ -29,5 +29,22 @@ The model was trained on a subset of the **PlantVillage** dataset, covering 15 c
 - Deploy the model using **Streamlit** for a web-based demo.
 - Quantize the model for mobile deployment to assist farmers in low-connectivity areas.
 
+## 📥 Pre-trained Model
+Download the fine-tuned ResNet18 weights from Hugging Face:
+[🤗 Hugging Face Model Hub]([https://huggingface.co/your-username/plant-disease-classifier](https://huggingface.co/alihaq123/plant_diease_classifier/blob/main/plant_disease_resnet18.pth))
+
+To use the model:
+```python
+import torch
+import json
+
+# Load model
+model = torch.load('plant_disease_resnet18.pth')
+
+# Load class names
+with open('class_names.json') as f:
+    class_names = json.load(f)
+```
+
 ## ⚠️ Security Note
 The `kaggle.json` API key used for data ingestion is **not** included in this repository for security reasons. To reproduce, please use your own Kaggle API credentials.

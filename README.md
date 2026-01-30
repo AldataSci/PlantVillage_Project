@@ -36,14 +36,25 @@ Download the fine-tuned ResNet18 weights and class mapping from Hugging Face:
 To use the model:
 ```python
 import torch
+import torch.nn as nn
+from torchvision import models
 import json
 
-# Load model
-model = torch.load('plant_disease_resnet18.pth')
+# 1. Rebuild the architecture
+model = models.resnet18(pretrained=False)
+num_ftrs = model.fc.in_features
+model.fc = nn.Linear(num_ftrs, 15) # 15 classes
 
-# Load class names
-with open('class_names.json') as f:
+# 2. Load the weights (state_dict)
+# Ensure 'plant_disease_resnet18.pth' is in your directory
+model.load_state_dict(torch.load('plant_disease_resnet18.pth', map_location=torch.device('cpu')))
+model.eval()
+
+# 3. Load class names
+with open('class_names.json', 'r') as f:
     class_names = json.load(f)
+
+print("Model loaded successfully!")
 ```
 
 ## ⚠️ Security Note

@@ -24,6 +24,12 @@ def load_model():
     # Replace this URL with your actual "Raw" link from Hugging Face
     weights_url = "https://huggingface.co/alihaq123/plant_diease_classifier/resolve/38ddadd9f2cffbd655627ade1778ab72cf805524/plant_disease_resnet18.pth"
     response = requests.get(weights_url)
+
+    st.write("HF status:", response.status_code)
+    st.write("HF content-type:", response.headers.get("content-type"))
+    st.write("HF bytes:", len(response.content))
+    # ===== END DEBUG =====
+    
     model.load_state_dict(torch.load(BytesIO(response.content), map_location=torch.device('cpu')))
     model.eval()
     return model

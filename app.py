@@ -38,8 +38,7 @@ class_names = load_labels()
 
 # 3. Image Preprocessing (Must match your training transforms!)
 preprocess = transforms.Compose([
-    transforms.Resize(256),
-    transforms.CenterCrop(224),
+    transforms.Resize((128,128)),
     transforms.ToTensor(),
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
@@ -63,6 +62,6 @@ if uploaded_file is not None:
                 confidence = torch.nn.functional.softmax(outputs, dim=1)[0][predicted].item()
             
             # Display Results
-            label = class_names[predicted.item()]
+            label = class_names[str(predicted.item())]
             st.success(f"**Prediction:** {label}")
             st.info(f"**Confidence:** {confidence*100:.2f}%")

@@ -36,6 +36,27 @@ def load_labels():
 model = load_model()
 class_names = load_labels()
 
+## Debug Panel 
+
+st.subheader("Debug (temporary)")
+
+# Confirm class_names type and a few entries
+st.write("class_names type:", type(class_names))
+if isinstance(class_names, dict):
+    st.write("class_names keys sample:", list(class_names.keys())[:5])
+    st.write("class_names values sample:", [class_names[k] for k in list(class_names.keys())[:5]])
+else:
+    st.write("class_names sample:", class_names[:5])
+
+# Confirm model final layer shape
+st.write("model.fc:", model.fc)
+
+# Confirm weights look non-trivial
+w = model.fc.weight.detach().cpu()
+st.write("fc weight mean/std:", float(w.mean()), float(w.std()))
+
+## End Debug panel
+
 # 3. Image Preprocessing (Must match your training transforms!)
 preprocess = transforms.Compose([
     transforms.Resize((128,128)),
@@ -58,6 +79,15 @@ if uploaded_file is not None:
             img_tensor = preprocess(image).unsqueeze(0)
             with torch.no_grad():
                 outputs = model(img_tensor)
+
+                # ===== DEBUG OUTPUT (ADD THIS) =====
+                st.write("raw outputs (first 5):", outputs[0][:5])
+                probs = torch.softmax(outputs, dim=1)[0]
+                topk = torch.topk(probs, k=5)
+                st.write("Top-5 indices:", topk.indices.tolist())
+                st.write("Top-5 probs:", [float(x) for x in topk.values])
+                # ===== END DEBUG OUTPUT =====
+                
                 _, predicted = torch.max(outputs, 1)
                 confidence = torch.nn.functional.softmax(outputs, dim=1)[0][predicted].item()
             

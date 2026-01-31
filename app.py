@@ -13,7 +13,7 @@ st.title("🌿 Plant Disease Classifier")
 st.markdown("""
 This app uses a **Fine-Tuned ResNet18** model to identify 15 different plant diseases.
              
- **Note:** This model is a 'Lab Specialist' trained on the **PlantVillage** dataset. 
+⚠️ **Note:** This model is a 'Lab Specialist' trained on the **PlantVillage** dataset. 
 It performs best on **close-up photos of single leaves** against **neutral, plain backgrounds**.
 """)
 
@@ -53,7 +53,7 @@ if uploaded_file is not None:
     st.image(image, caption='Uploaded Image', width=400)
     
     if st.button('Identify Disease'):
-      with st.spinner('Analyzing leaf patterns...'):
+        with st.spinner('Analyzing leaf patterns...'):
             img_tensor = preprocess(image).unsqueeze(0)
             with torch.no_grad():
                 outputs = model(img_tensor)
@@ -65,31 +65,7 @@ if uploaded_file is not None:
             # Display Results
             st.success(f"**Prediction:** {label.replace('___', ' - ').replace('__', ' - ').replace('_', ' ')}")
             st.progress(float(confidence))
-            st.info(f"**Confidence Score:** {confidence100:.2f}%")
+            st.info(f"**Confidence Score:** {confidence*100:.2f}%")
 
-st.markdown("---")
-st.caption("Developed as a Portfolio Project | Data Science & Deep Learning")
-      with st.spinner('Analyzing leaf pattern...'):
-            # Preprocess and Predict
-            img_tensor = preprocess(image).unsqueeze(0)
-            with torch.no_grad():
-                outputs = model(img_tensor)
-
-                # ===== DEBUG OUTPUT (ADD THIS) =====
-                #st.write("raw outputs (first 5):", outputs[0][:5])
-                probs = torch.softmax(outputs, dim=1)[0]
-                topk = torch.topk(probs, k=5)
-                #st.write("Top-5 indices:", topk.indices.tolist())
-                #st.write("Top-5 probs:", [float(x) for x in topk.values])
-                # ===== END DEBUG OUTPUT =====
-                
-                _, predicted = torch.max(outputs, 1)
-                confidence = torch.nn.functional.softmax(outputs, dim=1)[0][predicted].item()
-            
-            # Display Results
-            label = class_names[str(predicted.item())]
-            st.success(f"**Prediction:** {label}")
-            st.progress(float(confidence))
-            st.info(f"**Confidence:** {confidence*100:.2f}%")
 st.markdown("---")
 st.caption("Developed as a Portfolio Project | Data Science & Deep Learning")

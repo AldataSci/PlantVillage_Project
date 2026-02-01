@@ -1,8 +1,6 @@
 # 🌿 Plant Disease Classification using Transfer Learning
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge.svg)](https://plantdiseaseclassifier-dutgkqlda6aoanj4hm8zxk.streamlit.app/)
-
-An end-to-end computer vision application that identifies 15 different plant diseases using a fine-tuned ResNet18 architecture.
+This is An end-to-end computer vision application that identifies 15 different plant diseases using a fine-tuned ResNet18 architecture.
 
 ## 🚀 Live Demo
 **[Click here to try the app!](https://plantdiseaseclassifier-dutgkqlda6aoanj4hm8zxk.streamlit.app/)**
